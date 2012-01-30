@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.trumpet.log.jmx.guice;
+package com.nesscomputing.log.jmx.guice;
 
-import io.trumpet.log.jmx.Log4JMBean;
 
 import javax.management.MBeanServer;
 
@@ -24,10 +23,11 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.name.Names;
-import com.likeness.lifecycle.Lifecycle;
-import com.likeness.lifecycle.LifecycleStage;
-import com.likeness.lifecycle.guice.AbstractLifecycleProvider;
-import com.likeness.lifecycle.guice.LifecycleAction;
+import com.nesscomputing.lifecycle.Lifecycle;
+import com.nesscomputing.lifecycle.LifecycleStage;
+import com.nesscomputing.lifecycle.guice.AbstractLifecycleProvider;
+import com.nesscomputing.lifecycle.guice.LifecycleAction;
+import com.nesscomputing.log.jmx.Log4JMBean;
 
 public class JmxLoggingModule extends AbstractModule
 {

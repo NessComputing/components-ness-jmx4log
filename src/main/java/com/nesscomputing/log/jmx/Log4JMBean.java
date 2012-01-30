@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.trumpet.log.jmx;
+package com.nesscomputing.log.jmx;
 
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -32,7 +32,7 @@ import org.apache.log4j.LogManager;
 import org.weakref.jmx.MBeanExporter;
 import org.weakref.jmx.Managed;
 
-import com.likeness.logging.Log;
+import com.nesscomputing.logging.Log;
 
 /**
  * Control the Log4j Loggers using JMX.
