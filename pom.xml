@@ -6,7 +6,7 @@
   <parent>
     <groupId>com.nesscomputing</groupId>
     <artifactId>ness-oss-parent</artifactId>
-    <version>3</version>
+    <version>8</version>
   </parent>
 
   <scm>
@@ -32,7 +32,7 @@
     <dependency>
       <groupId>com.nesscomputing.components</groupId>
       <artifactId>ness-lifecycle</artifactId>
-      <version>1.0.1</version>
+      <version>1.1.0</version>
     </dependency>
 
     <dependency>
@@ -44,25 +44,22 @@
     <dependency>
       <groupId>com.google.inject</groupId>
       <artifactId>guice</artifactId>
-      <version>3.0</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.1</version>
     </dependency>
 
     <dependency>
       <groupId>org.weakref</groupId>
       <artifactId>jmxutils</artifactId>
-      <version>1.10</version>
+      <version>1.12</version>
     </dependency>
 
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>11.0.1</version>
     </dependency>
   </dependencies>
 </project>
