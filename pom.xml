@@ -18,7 +18,7 @@
   <groupId>com.nesscomputing.components</groupId>
   <artifactId>ness-jmx4log</artifactId>
   <name>ness-jmx4log</name>
-  <version>1.0.2</version>
+  <version>1.0.3-SNAPSHOT</version>
   <packaging>jar</packaging>
   <description>JMX control for Logging component.</description>
 
