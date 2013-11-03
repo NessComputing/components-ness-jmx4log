@@ -39,7 +39,7 @@ import com.nesscomputing.logging.Log;
  */
 public class Log4JMBean
 {
-	/** Default MBean prefix. */
+    /** Default MBean prefix. */
     public static final String DEFAULT_OBJECT_NAME = "io.trumpet.log:name=Logger";
 
     /**
@@ -48,7 +48,7 @@ public class Log4JMBean
      */
     public static final int PRESERVE_PACKAGES = 2;
 
-	private static final Log LOG = Log.findLog();
+    private static final Log LOG = Log.findLog();
 
     private final Map<String, Log4JLevelMBean> levelMBeans = new ConcurrentSkipListMap<String, Log4JLevelMBean>();
     private final Map<Object, String> exportedObjects = new HashMap<Object, String>();
@@ -71,25 +71,25 @@ public class Log4JMBean
     public Log4JMBean(final MBeanServer mbeanServer, final String jmxRoot)
     {
         this.exporter = new MBeanExporter(mbeanServer);
-    	this.jmxRoot = jmxRoot;
+        this.jmxRoot = jmxRoot;
     }
 
     public synchronized void start()
     {
-    	exportMBean(jmxRoot, this);
+        exportMBean(jmxRoot, this);
 
-    	// The root MBean always exists, so it does not show up in the levelMBeans map.
+        // The root MBean always exists, so it does not show up in the levelMBeans map.
         Log4JLevelMBean rootLevelMBean = new Log4JLevelMBean(LogManager.getRootLogger(), 0L);
         exportMBean(buildJMXName("_ROOT_"), rootLevelMBean);
 
 
-    	if (loggerThread == null) {
-    		loggerThread = new LoggerThread();
-    		loggerThread.start();
-    	}
-    	else {
-    		LOG.warn("Ignoring multiple start attempts!");
-    	}
+        if (loggerThread == null) {
+            loggerThread = new LoggerThread();
+            loggerThread.start();
+        }
+        else {
+            LOG.warn("Ignoring multiple start attempts!");
+        }
     }
 
     public synchronized void stop()
@@ -103,56 +103,56 @@ public class Log4JMBean
     }
 
     @Managed
-	public String [] getLoggerNames()
-	{
+    public String [] getLoggerNames()
+    {
         final Set<String> mbeans = levelMBeans.keySet();
-		return mbeans.toArray(new String[mbeans.size()]);
+        return mbeans.toArray(new String[mbeans.size()]);
     }
 
     private void exportMBean(final String name, final Object bean)
     {
-    	synchronized(exportedObjects) {
-    	    try {
-    	        exporter.export(name, bean);
-    	        exportedObjects.put(bean, name);
-    	    } catch (RuntimeException re) {
-    	        if (re.getCause() instanceof InstanceAlreadyExistsException) {
-    	            LOG.warn("Could not export '%s', already exists!", name);
-    	        }
-    	        else {
-    	            throw re;
-    	        }
-    	    }
-    	}
+        synchronized(exportedObjects) {
+            try {
+                exporter.export(name, bean);
+                exportedObjects.put(bean, name);
+            } catch (RuntimeException re) {
+                if (re.getCause() instanceof InstanceAlreadyExistsException) {
+                    LOG.warn("Could not export '%s', already exists!", name);
+                }
+                else {
+                    throw re;
+                }
+            }
+        }
     }
 
     private void unexportMBeans()
     {
-    	synchronized(exportedObjects) {
-    		for (String jmxName : exportedObjects.values()) {
+        synchronized(exportedObjects) {
+            for (String jmxName : exportedObjects.values()) {
                 try {
-    		        exporter.unexport(jmxName);
+                    exporter.unexport(jmxName);
                 } catch (RuntimeException re) {
                     LOG.warn("Could not unexport '%s'!", jmxName);
                 }
-    		}
-    		exportedObjects.clear();
-    	}
+            }
+            exportedObjects.clear();
+        }
     }
 
     private void unexportMBean(final Object bean)
     {
-    	synchronized(exportedObjects) {
-    		final String key = exportedObjects.remove(bean);
+        synchronized(exportedObjects) {
+            final String key = exportedObjects.remove(bean);
 
-    		if (key != null) {
+            if (key != null) {
                 try {
                     exporter.unexport(key);
                 } catch (RuntimeException re) {
                     LOG.warn("Could not unexport '%s'!", key);
                 }
-    		}
-    	}
+            }
+        }
     }
 
     private Log4JLevelMBean locateLevelMBean(final Category logger)
@@ -180,24 +180,24 @@ public class Log4JMBean
 
     private String buildJMXName(final String loggerName)
     {
-    	String [] pieces = StringUtils.split(loggerName, ".");
+        String [] pieces = StringUtils.split(loggerName, ".");
 
-    	StringBuilder jmxName = new StringBuilder(jmxRoot);
-    	jmxName.append(",logger=");
+        StringBuilder jmxName = new StringBuilder(jmxRoot);
+        jmxName.append(",logger=");
 
-    	if (pieces.length < PRESERVE_PACKAGES) {
-    		jmxName.append(loggerName);
-    	}
-    	else {
-    		jmxName.append(StringUtils.join(pieces, ".", 0, PRESERVE_PACKAGES));
-    		for (int i = PRESERVE_PACKAGES; i < pieces.length; i++) {
-    			jmxName.append(",logger");
-    			jmxName.append(i);
-    			jmxName.append("=");
-    			jmxName.append(pieces[i]);
-    		}
-    	}
-    	return jmxName.toString();
+        if (pieces.length < PRESERVE_PACKAGES) {
+            jmxName.append(loggerName);
+        }
+        else {
+            jmxName.append(StringUtils.join(pieces, ".", 0, PRESERVE_PACKAGES));
+            for (int i = PRESERVE_PACKAGES; i < pieces.length; i++) {
+                jmxName.append(",logger");
+                jmxName.append(i);
+                jmxName.append('=');
+                jmxName.append(pieces[i]);
+            }
+        }
+        return jmxName.toString();
     }
 
     /**
@@ -220,10 +220,10 @@ public class Log4JMBean
             running = false;
             this.interrupt();
             try {
-            	this.join();
+                this.join();
             }
             catch (InterruptedException ioe) {
-            	Thread.currentThread().interrupt();
+                Thread.currentThread().interrupt();
             }
         }
 
@@ -232,7 +232,7 @@ public class Log4JMBean
         {
             while(running) {
                 try {
-                	// tick every five seconds.
+                    // tick every five seconds.
                     Thread.sleep(5000L);
                 }
                 catch (InterruptedException ioe) {
@@ -248,7 +248,7 @@ public class Log4JMBean
         }
 
         @SuppressWarnings("unchecked")
-		private void updateLevelMBeans(final long currentGeneration)
+        private void updateLevelMBeans(final long currentGeneration)
         {
             final Enumeration<Category> e = LogManager.getCurrentLoggers();
 
